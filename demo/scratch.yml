@@ -1,0 +1,12 @@
+---
+    - hosts: all
+      tasks:
+          - name: Gathering EC2 facts
+            action: ec2_facts
+            register: my_ec2_facts
+
+        # - name: Adding new instance to host group tag_Name_{{ role }}
+        #   local_action: add_host hostname=${cf.stack_outputs.PublicDnsName} groupname=tag_Name_{{ role }}
+
+          - debug: msg="Public IP addresses are {{ item.public_ip }}"
+            with_dict: my_ec2_facts

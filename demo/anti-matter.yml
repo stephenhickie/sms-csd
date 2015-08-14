@@ -1,0 +1,29 @@
+---
+    - name: Create SMS-ChildStory-Demo Anti-matter Script
+      hosts: 127.0.0.1
+      connection: local
+      vars_files:
+          - "vars.yml"
+      tasks:
+          - name: Gather EC2 facts
+            local_action: ec2_facts
+          - name: remove
+            ec2
+          - name: Remove the EC2 key
+            ec2_key:
+                name: "{{ demo_security_key }}"
+                region: "{{ aws_region }}"
+                state: absent
+
+          - name: Remove the security group
+            local_action:
+              module: ec2_group
+              name: "{{ demo_security_group }}"
+              region: "{{ aws_region }}"
+              state: absent
+
+          - name: Remove VPC
+            ec2_vpc:
+                state: absent
+                cidr_block: 172.22.0.0/16
+                resource_tags: { "Environment":"Demo", name: "{{project}}", owner: "{{owner}}" }

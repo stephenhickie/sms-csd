@@ -1,0 +1,10 @@
+---
+  aws_region: us-west-2
+  az: us-west-2a
+  demo_security_group: sms-csd-default-group
+  demo_security_key: sms-csd-ssh-key
+  demo_vpc: sms-csd-vpc
+  ubuntu_image: ami-c5616bf5
+  owner: StephenHickie
+  project: SMSChildStoryDemo
+  #vpc_id: vpc-77de3e12
