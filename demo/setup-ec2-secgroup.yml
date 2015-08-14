@@ -1,0 +1,23 @@
+---
+  - name: Setup EC2 Security Group
+    connection: local
+    local_action:
+       module: ec2_group
+       name: "{{ demo_security_group }}"
+       description: Access SMS CSD Default Security Group
+       region: "{{ aws_region }}"
+       vpc_id: "{{ vpc.vpc_id}}"
+       rules:
+         - proto: tcp
+           from_port: 22
+           to_port: 22
+           cidr_ip: 0.0.0.0/0
+         - proto: tcp
+           from_port: 80
+           to_port: 80
+           cidr_ip: 0.0.0.0/0
+         - proto: tcp
+           from_port: 3389
+           to_port: 3389
+           cidr_ip: 0.0.0.0/0
+    register: secgroup

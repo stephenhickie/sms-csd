@@ -1,0 +1,19 @@
+---
+  ubuntu_image: ami-c5616bf5
+  windows_image: ami-dontknow
+
+  vms:
+    scd-haproxy:
+      size: t1.micro
+      ami: "{{ ubuntu_image }}"
+      role: haproxy
+      assign_public_ip: yes
+      exact_count: 1
+      os: linux
+    scd-muleesb:
+      size: t1.micro
+      ami: "{{ ubuntu_image }}"
+      role: deleteme
+      assign_public_ip: yes
+      exact_count: 1
+      os: linux
