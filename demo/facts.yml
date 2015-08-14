@@ -1,6 +1,0 @@
----
-  - hosts: tag_Name_{{instance}}
-
-    tasks:
-      - name: get EC2 facts
-        action: ec2_facts

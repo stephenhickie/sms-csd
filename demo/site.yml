@@ -1,0 +1,12 @@
+---
+  - name: Ansible Demo Builder
+    hosts: all
+    vars_files:
+      - vars.yml
+    tasks:
+      - include: setup-ec2-key.yml
+      - include: setup-ec2-vpc.yml
+      - include: setup-ec2-secgroup.yml
+      ## Start the vms
+      - include_vars: vms.yml
+      - include: setup-instances.yml

@@ -1,0 +1,29 @@
+---
+  - name: Setup EC2 VPC
+    connection: local
+    local_action:
+        module: ec2_vpc
+        state: present
+        cidr_block: 172.22.0.0/16
+        resource_tags: { "Environment":"Demo", name: "{{project}}", owner: "{{owner}}" }
+        subnets:
+          - cidr: 172.22.1.0/24
+            az: "{{ az }}"
+            resource_tags: { "Environment":"Demo", "Name" : "WebTier" }
+          - cidr: 172.22.2.0/24
+            az: "{{ az }}"
+            resource_tags: { "Environment":"Demo", "Name" : "AppTier" }
+        internet_gateway: True
+        route_tables:
+          - subnets:
+              - 172.22.2.0/24
+            routes:
+              - dest: 0.0.0.0/0
+                gw: igw
+          - subnets:
+              - 172.22.1.0/24
+            routes:
+              - dest: 0.0.0.0/0
+                gw: igw
+        region: "{{ aws_region }}"
+    register: vpc
