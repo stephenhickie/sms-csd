@@ -71,34 +71,6 @@
       - debug: var=secgroup
 
 
-
-
-      # - debug: msg="Oh Hai! you're looking at {{ ec2.instances[0].public_ip }}"
-
-      # - name: Gather EC2 facts
-      #   local_action: ec2_facts
-      #   register: ec2_facts
-      # #
-  #     - debug: var=hostvars
-      - debug: var=ec2.results
-  #     # - debug: var=ec2.results[0].tagged_instances
-  #     # - debug: var=ec2.results[0].tagged_instances.id
-  #     # - debug: var=ec2.results[0].tagged_instances[0].id
-  #     # - debug: msg="Now for the crunchy bit"
-  #     # - debug: var=ec2.results.public_ip
-  #     # - debug: msg="And now {{ item.tagged_instances[0].public_ip }}"
-  #     #   with_items: ec2.results
-  #
-  #     # - debug: msg="And now {{ item.tagged_instances[0].public_ip }}"
-  #     #   with_items: ec2.results.tagged_instances["State"]
-  #
-
-      # - name: Find the Web Tier public subnet
-      #   set_fact: vpc_webtier_subnet_id="{{ item.id }}"
-      #   when: item.resource_tags.Tier == "Web"
-      #   with_items: vpc.subnets
-      #
-
       - name: Launch instances
         local_action:
           module: ec2
@@ -129,6 +101,32 @@
           - { name: 'scd-muleesb', size: 't1.micro', ami: "{{ ubuntu_image }}", role: 'deleteme', public_ip: 'yes', exact_count: '1', os: 'linux' }
         register: ec2
 
+
+      # - debug: msg="Oh Hai! you're looking at {{ ec2.instances[0].public_ip }}"
+
+      # - name: Gather EC2 facts
+      #   local_action: ec2_facts
+      #   register: ec2_facts
+      # #
+  #     - debug: var=hostvars
+      - debug: var=ec2.results
+  #     # - debug: var=ec2.results[0].tagged_instances
+  #     # - debug: var=ec2.results[0].tagged_instances.id
+  #     # - debug: var=ec2.results[0].tagged_instances[0].id
+  #     # - debug: msg="Now for the crunchy bit"
+  #     # - debug: var=ec2.results.public_ip
+  #     # - debug: msg="And now {{ item.tagged_instances[0].public_ip }}"
+  #     #   with_items: ec2.results
+  #
+  #     # - debug: msg="And now {{ item.tagged_instances[0].public_ip }}"
+  #     #   with_items: ec2.results.tagged_instances["State"]
+  #
+
+      # - name: Find the Web Tier public subnet
+      #   set_fact: vpc_webtier_subnet_id="{{ item.id }}"
+      #   when: item.resource_tags.Tier == "Web"
+      #   with_items: vpc.subnets
+      #
 
 
       - name: Add new instance to host group
